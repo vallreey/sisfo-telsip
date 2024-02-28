@@ -1,0 +1,62 @@
+/* public/css/sidebar.css */
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
+
+.user-details {
+    margin-top: 5px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 14px; /* Sesuaikan ukuran sesuai kebutuhan */
+    margin-top: 5px;
+    font-family: 'Poppins';
+}
+.user-avatar {
+    border-radius: 50%;
+    width: 80px; /* Sesuaikan ukuran sesuai kebutuhan */
+    height: 80px; /* Sesuaikan ukuran sesuai kebutuhan */
+    object-fit: cover;
+}
+#sidebar .nav-pills .nav-item:hover {
+    background-color: #1E7E73 !important;
+}
+
+#sidebar .nav-pills .nav-link.active,
+#sidebar .nav-pills .show > .nav-link {
+    background-color: #1E7E73 !important;
+}
+
+#sidebar {
+    background-color: #ffffff; /* Warna sidebar */
+    color: #000000; /* Warna font */
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar .sidebar-header {
+    background-color: #ffffff; /* Warna header sidebar */
+    color: #000000; /* Warna font header sidebar */
+    padding: 20px;
+    text-align: center;
+}
+
+#sidebar .sidebar-header img {
+    width: 80%; /* Sesuaikan lebar logo */
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+}
