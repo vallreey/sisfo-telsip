@@ -21,8 +21,6 @@ use App\Http\Controllers\PresenceController;
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register')->middleware('guest');
-Route::post('/register', [AuthController::class, 'register']);
 
 // Rute untuk halaman dashboard yang dilindungi oleh middleware
 Route::middleware(['auth'])->group(function () {
@@ -51,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
         })->name('superadmin.dashboard');
     });
     
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register')->middleware('superadmin');
+Route::post('/register', [AuthController::class, 'register'])->middleware('superadmin');
+
     
 
     //ini untuk data karyawan

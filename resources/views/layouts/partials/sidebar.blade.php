@@ -32,6 +32,12 @@
                         <i class="nav-icon fas fa-users"></i> Employees
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">
+                        <i class="nav-icon fas fa-user-plus"></i> Tambah Akun
+                    </a>
+                </li>
+                
                 @endif
 
                 <li class="nav-item">

@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         // ...
+        'superadmin.register' => \App\Http\Middleware\SuperAdminRegisterMiddleware::class,
         'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
     ];
     

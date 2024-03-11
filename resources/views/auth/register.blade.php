@@ -53,6 +53,21 @@
                         </div>
                     </div>
 
+                    <!-- Tambahkan input select untuk memilih role -->
+                    <div class="input-group mb-3">
+                        <select class="custom-select" name="role" required>
+                            <option value="">Choose Role</option>
+                            <option value="superadmin">Superadmin</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-tag"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
