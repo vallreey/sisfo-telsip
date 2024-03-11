@@ -6,7 +6,7 @@
     <div class="container">
         <h2>Add Employee</h2>
 
-        <form action="{{ route('employees.store') }}" method="post">
+        <form action="{{ route('employees.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -23,6 +23,13 @@
             <div class="form-group">
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Select Image:</label>
+                <input type="file" class="form-control-file" id="image" name="photo">
+                @error('photo')
+                <small>{{$message}}</small>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Add Employee</button>
         </form>

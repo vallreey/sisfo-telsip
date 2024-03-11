@@ -27,11 +27,35 @@ Route::post('/register', [AuthController::class, 'register']);
 // Rute untuk halaman dashboard yang dilindungi oleh middleware
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        // Mengambil jumlah total absensi berdasarkan status
+        $totalEmployees = \App\Models\Employee::count();
+        $totalPresences = \App\Models\Presence::count();
+        $totalPresent = \App\Models\Presence::where('status', 'present')->count();
+        $totalPermission = \App\Models\Presence::where('status', 'permission')->count();
+        $totalSick = \App\Models\Presence::where('status', 'sick')->count();
+        $totalCuti = \App\Models\Presence::where('status', 'cuti')->count();
+
+        return view('dashboard', compact('totalPresences', 'totalPresent', 'totalPermission', 'totalSick', 'totalCuti', 'totalEmployees'));
     })->name('dashboard');
 
+    Route::middleware(['auth', 'superadmin'])->group(function () {
+        Route::get('/superadmin', function () {
+            // Mengambil jumlah total absensi berdasarkan status
+        $totalEmployees = \App\Models\Employee::count();
+        $totalPresences = \App\Models\Presence::count();
+        $totalPresent = \App\Models\Presence::where('status', 'present')->count();
+        $totalPermission = \App\Models\Presence::where('status', 'permission')->count();
+        $totalSick = \App\Models\Presence::where('status', 'sick')->count();
+        $totalCuti = \App\Models\Presence::where('status', 'cuti')->count();
+            return view('superadmin/superadmin', compact('totalPresences', 'totalPresent', 'totalPermission', 'totalSick', 'totalCuti', 'totalEmployees'));
+        })->name('superadmin.dashboard');
+    });
+    
+    
+
     //ini untuk data karyawan
-    Route::resource('employees', EmployeeController::class);
+    Route::resource('employees', EmployeeController::class)->middleware('superadmin');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //ini untuk presensi kehadiran

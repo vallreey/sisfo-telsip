@@ -11,6 +11,10 @@
                 <td>{{ $employee->id }}</td>
             </tr>
             <tr>
+                <th>Image</th>
+                <td>{{ $employee->image_path }}</td>
+            </tr>
+            <tr>
                 <th>Name</th>
                 <td>{{ $employee->name }}</td>
             </tr>

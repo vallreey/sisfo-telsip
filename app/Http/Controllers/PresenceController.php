@@ -23,7 +23,7 @@ class PresenceController extends Controller
     {
         $request->validate([
             'shift' => 'required|in:morning,afternoon,evening',
-            'status' => 'required|in:present,permission,sick',
+            'status' => 'required|in:present,permission,sick,cuti',
         ]);
 
         $existingPresence = Presence::where([

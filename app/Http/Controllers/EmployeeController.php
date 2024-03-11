@@ -21,18 +21,41 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:15',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'birthdate' => 'required|date',
+        'address' => 'required|string|max:255',
+        'phone_number' => 'required|string|max:15',
+        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+    ]);
 
-        Employee::create($request->all());
+    // Tangkap file gambar yang diunggah
+    $image = $request->file('photo');
 
-        return redirect()->route('employees.index')->with('success', 'Employee added successfully.');
-    }
+    // Berikan nama unik untuk file gambar
+    $imageName = time().'.'.$image->extension();
+
+    // Pindahkan file gambar ke direktori yang telah ditentukan
+    $image->move(public_path('uploads'), $imageName);
+
+    // Simpan jalur file gambar ke dalam kolom 'image_path'
+    $imagePath = 'uploads/'.$imageName;
+
+    // Membuat karyawan baru
+    $employee = new Employee([
+        'name' => $request->get('name'),
+        'birthdate' => $request->get('birthdate'),
+        'address' => $request->get('address'),
+        'phone_number' => $request->get('phone_number'),
+        'image_path' => $imagePath, // Menyimpan jalur gambar ke dalam kolom image_path
+    ]);
+
+    $employee->save();
+
+    return redirect()->route('employees.index')->with('success', 'Employee added successfully.');
+}
+
     public function show($id)
     {
         $employee = Employee::find($id);

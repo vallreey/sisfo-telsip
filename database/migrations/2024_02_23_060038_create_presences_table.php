@@ -13,7 +13,7 @@ class CreatePresencesTable extends Migration
             $table->foreignId('user_id')->constrained(); // Assuming you have a users table
             $table->date('attendance_date');
             $table->enum('shift', ['morning', 'afternoon', 'evening']);
-            $table->enum('status', ['present', 'permission', 'sick']);
+            $table->enum('status', ['present', 'permission', 'sick', 'cuti']);
             $table->timestamps();
         });
     }

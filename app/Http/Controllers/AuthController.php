@@ -24,13 +24,19 @@ class AuthController extends Controller
         ]);
 
         // Coba melakukan login
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            // Jika berhasil, arahkan ke halaman dashboard atau halaman yang diinginkan
-            return redirect()->route('dashboard');
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Cek apakah pengguna memiliki peran 'superadmin'
+            if (Auth::user()->role === 'superadmin') {
+                // Jika ya, arahkan ke halaman dashboard superadmin
+                return redirect()->route('superadmin.dashboard');
+            } else {
+                // Jika tidak, arahkan ke halaman dashboard biasa
+                return redirect()->route('dashboard');
+            }
         }
 
         // Jika login gagal, kembalikan ke halaman login dengan pesan error
-        return back()->withErrors(['email' => 'These credentials do not match our records.'])->withInput($request->only('email', 'remember'));
+        return back()->withErrors(['email' => 'These credentials do not match our records.'])->withInput($request->only('email'));
     }
 
     public function showRegisterForm()
@@ -41,6 +47,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
+            
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|min:8|confirmed',

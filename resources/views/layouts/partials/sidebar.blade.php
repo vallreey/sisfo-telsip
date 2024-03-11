@@ -8,7 +8,6 @@
             <i class="fas fa-bars"></i>
         </button>
         <img src="{{ asset('assets/logo-telsip.png') }}" alt="Logo" style="max-width: 150px; max-height: 150px; margin-left: 10px;">
-
     </a>
 
     <!-- Sidebar -->
@@ -25,11 +24,16 @@
                         <i class="nav-icon fas fa-home"></i> Dashboard
                     </a>
                 </li>
+                
+                <!-- Menampilkan item sidebar Employees hanya untuk role superadmin -->
+                @if(auth()->user()->role === 'superadmin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('employees.index') }}">
                         <i class="nav-icon fas fa-users"></i> Employees
                     </a>
                 </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('attendance.create') }}">
                         <i class="nav-icon fas fa-clock"></i> Attendance

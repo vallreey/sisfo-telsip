@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('image')->nullable()->after('remember_token');
             $table->string('name');
             $table->date('birthdate');
             $table->string('address');

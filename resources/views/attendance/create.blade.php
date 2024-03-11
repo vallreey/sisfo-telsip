@@ -1,5 +1,3 @@
-<!-- resources/views/attendance/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -26,9 +24,12 @@
                     <option value="present">Hadir</option>
                     <option value="permission">Izin</option>
                     <option value="sick">Sakit</option>
+                    <option value="leave">Cuti</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Record Attendance</button>
+            <!-- Button "Lihat Absensi" -->
+            <a href="/attendance" class="btn btn-success">Lihat Absensi</a>
         </form>
     </div>
 @endsection
