@@ -27,19 +27,28 @@
                 
                 <!-- Menampilkan item sidebar Employees hanya untuk role superadmin -->
                 @if(auth()->user()->role === 'superadmin')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('employees.index') }}">
-                        <i class="nav-icon fas fa-users"></i> Employees
-                    </a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}">
                         <i class="nav-icon fas fa-user-plus"></i> Tambah Akun
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('listakun') }}">
+                        <i class="nav-icon fas fa-user-plus"></i> Daftar Akun Pegawai
+                    </a>
+                </li>
+                
                 
                 @endif
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('employees.index') }}">
+                        <i class="nav-icon fas fa-users"></i> Employees
+                    </a>
+                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('attendance.create') }}">
                         <i class="nav-icon fas fa-clock"></i> Attendance

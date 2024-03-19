@@ -62,6 +62,51 @@
     </div>
     <div>
     </div>
+    <div class="container">
+        <h2>Financial Overview</h2>
+
+        <canvas id="financialChart" width="400" height="200"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('financialChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March'],
+                    datasets: [{
+                        label: 'Financial Data',
+                        data: [{{$totalCuti}}], // Contoh data keuangan
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function(value, index, values) {
+                                    return 'Rp' + value.toLocaleString(); // Format uang
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
     
 
     <!-- /.js nya ini -->

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -21,40 +22,45 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'birthdate' => 'required|date',
-        'address' => 'required|string|max:255',
-        'phone_number' => 'required|string|max:15',
-        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+        ]);
 
-    // Tangkap file gambar yang diunggah
-    $image = $request->file('photo');
+        // Tangkap file gambar yang diunggah
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
 
-    // Berikan nama unik untuk file gambar
-    $imageName = time().'.'.$image->extension();
+            // Berikan nama unik untuk file gambar
+            $imageName = time().'.'.$image->extension();
 
-    // Pindahkan file gambar ke direktori yang telah ditentukan
-    $image->move(public_path('uploads'), $imageName);
+            // Pindahkan file gambar ke direktori yang telah ditentukan
+            $image->move(public_path('uploads'), $imageName);
 
-    // Simpan jalur file gambar ke dalam kolom 'image_path'
-    $imagePath = 'uploads/'.$imageName;
+            // Simpan jalur file gambar ke dalam kolom 'image_path'
+            $imagePath = 'uploads/'.$imageName;
+        } else {
+            $imagePath = null;
+        }
 
-    // Membuat karyawan baru
-    $employee = new Employee([
-        'name' => $request->get('name'),
-        'birthdate' => $request->get('birthdate'),
-        'address' => $request->get('address'),
-        'phone_number' => $request->get('phone_number'),
-        'image_path' => $imagePath, // Menyimpan jalur gambar ke dalam kolom image_path
-    ]);
+        // Membuat karyawan baru
+        $employee = new Employee([
+            'name' => $request->get('name'),
+            'birthdate' => $request->get('birthdate'),
+            'address' => $request->get('address'),
+            'phone_number' => $request->get('phone_number'),
+            'image_path' => $imagePath, // Menyimpan jalur gambar ke dalam kolom image_path
+        ]);
 
-    $employee->save();
+        $employee->save();
 
-    return redirect()->route('employees.index')->with('success', 'Employee added successfully.');
-}
+        return redirect()->route('employees.index')->with('success', 'Employee added successfully.');
+    }
+
 
     public function show($id)
     {
@@ -78,9 +84,32 @@ class EmployeeController extends Controller
             'birthdate' => 'required|date',
             'address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
         ]);
 
-        $employee->update($request->all());
+        // Tangkap file gambar yang diunggah
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+
+            // Berikan nama unik untuk file gambar
+            $imageName = time().'.'.$image->extension();
+
+            // Pindahkan file gambar ke direktori yang telah ditentukan
+            $image->move(public_path('uploads'), $imageName);
+
+            // Simpan jalur file gambar ke dalam kolom 'image_path'
+            $imagePath = 'uploads/'.$imageName;
+
+            // Update jalur gambar baru dalam database
+            $employee->image_path = $imagePath;
+        }
+
+        // Update informasi karyawan
+        $employee->name = $request->get('name');
+        $employee->birthdate = $request->get('birthdate');
+        $employee->address = $request->get('address');
+        $employee->phone_number = $request->get('phone_number');
+        $employee->save();
 
         return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }

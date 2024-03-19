@@ -25,11 +25,8 @@
                 <input type="text" class="form-control" id="phone_number" name="phone_number" required>
             </div>
             <div class="form-group">
-                <label for="image">Select Image:</label>
-                <input type="file" class="form-control-file" id="image" name="photo">
-                @error('photo')
-                <small>{{$message}}</small>
-                @enderror
+                <label for="photo">Photo:</label>
+                <input type="file" class="form-control-file" id="photo" name="photo">
             </div>
             <button type="submit" class="btn btn-primary">Add Employee</button>
         </form>

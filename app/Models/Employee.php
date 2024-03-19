@@ -12,6 +12,7 @@ class Employee extends Model
         'birthdate',
         'address',
         'phone_number',
+        'image_path',
     ];
 
     // atau gunakan guarded jika Anda ingin melarang semua properti

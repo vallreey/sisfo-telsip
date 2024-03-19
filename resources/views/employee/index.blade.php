@@ -5,7 +5,9 @@
 @section('content')
     <div class="container">
         <h2>Employee List</h2>
+        @if(auth()->user()->role === 'superadmin')
         <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">Add Employee</a>
+        @endif
 
         @if(session('success'))
             <div id="employee-added" class="alert alert-success">
@@ -21,7 +23,9 @@
                     <th>Birthdate</th>
                     <th>Address</th>
                     <th>Phone Number</th>
+                    
                     <th>Action</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -32,13 +36,16 @@
                         <td>{{ $employee->birthdate }}</td>
                         <td>{{ $employee->address }}</td>
                         <td>{{ $employee->phone_number }}</td>
+                       
                         <td>
                             <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info">View</a>
+                            @if(auth()->user()->role === 'superadmin')
                             <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning">Edit</a>
 
                             <!-- Tombol Delete dengan SweetAlert -->
                             <button class="btn btn-danger" onclick="confirmDelete('{{ $employee->id }}')">Delete</button>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

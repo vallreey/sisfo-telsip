@@ -6,7 +6,7 @@
     <div class="container">
         <h2>Edit Employee</h2>
 
-        <form action="{{ route('employees.update', $employee->id) }}" method="post">
+        <form action="{{ route('employees.update', $employee->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -24,6 +24,10 @@
             <div class="form-group">
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $employee->phone_number }}" required>
+            </div>
+            <div class="form-group">
+                <label for="photo">Photo:</label>
+                <input type="file" class="form-control-file" id="photo" name="photo">
             </div>
             <button type="submit" class="btn btn-primary">Update Employee</button>
         </form>

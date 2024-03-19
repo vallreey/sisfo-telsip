@@ -45,18 +45,21 @@ Route::middleware(['auth'])->group(function () {
         $totalPermission = \App\Models\Presence::where('status', 'permission')->count();
         $totalSick = \App\Models\Presence::where('status', 'sick')->count();
         $totalCuti = \App\Models\Presence::where('status', 'cuti')->count();
+        $totalGaji = \App\Models\Financial::where('amount')->count();
             return view('superadmin/superadmin', compact('totalPresences', 'totalPresent', 'totalPermission', 'totalSick', 'totalCuti', 'totalEmployees'));
         })->name('superadmin.dashboard');
     });
     
+    Route::get('/listakun', [AuthController::class, 'listakun'])->name('listakun')->middleware('superadmin');
+
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register')->middleware('superadmin');
 Route::post('/register', [AuthController::class, 'register'])->middleware('superadmin');
+
 
     
 
     //ini untuk data karyawan
-    Route::resource('employees', EmployeeController::class)->middleware('superadmin');
-
+    Route::resource('employees', EmployeeController::class);
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //ini untuk presensi kehadiran

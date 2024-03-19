@@ -11,10 +11,6 @@
                 <td>{{ $employee->id }}</td>
             </tr>
             <tr>
-                <th>Image</th>
-                <td>{{ $employee->image_path }}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td>{{ $employee->name }}</td>
             </tr>
@@ -29,6 +25,16 @@
             <tr>
                 <th>Phone Number</th>
                 <td>{{ $employee->phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>
+                    @if($employee->image_path)
+                        <img src="{{ asset($employee->image_path) }}" alt="Employee Photo" style="max-width: 200px; max-height: 200px;">
+                    @else
+                        No Photo
+                    @endif
+                </td>
             </tr>
         </table>
         <a href="{{ route('employees.index') }}" class="btn btn-primary">Back to List</a>
